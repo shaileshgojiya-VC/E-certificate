@@ -1,0 +1,67 @@
+├── api/                         # FastAPI application 
+│   ├── v1/                      # API version 1 endpoints
+│   │   ├── endpoints/           # API route handlers 
+│   │   │   ├── assets.py        # Asset management endpoints
+│   │   │   ├── auth.py          # Authentication endpoints
+│   │   │   ├── blockchain.py    # Blockchain interaction endpoints
+│   │   │   └── users.py         # User management endpoints
+│   │   ├── deps.py              # Dependency injection
+│   │   └── router.py            # API router configuration
+│   ├── core/                    # Core application modules
+│   │   ├── config.py            # Application configuration
+│   │   ├── security.py          # Security utilities
+│   │   └── exceptions.py        # Custom exceptions
+│   ├── db/                      # Database 
+│   │   ├── models/              # SQLAlchemy models
+│   │   ├── session.py           # Database session management
+│   │   └── repositories/        # Database access layer
+│   ├── schemas/                 # Pydantic schemas for request/response validation
+│   │   ├── assets.py            # Asset schemas
+│   │   ├── users.py             # User schemas 
+│   │   └── blockchain.py        # Blockchain operation schemas
+│   └── main.py                  # FastAPI application entry point
+├── blockchain/                  # Hyperledger Fabric integration
+│   ├── chaincode/               # Smart contract definitions
+│   │   ├── assets/              # Asset management smart contracts 
+│   │   │   ├── src/             # Source code for the chaincode
+│   │   │   ├── Dockerfile       # Docker build for chaincode
+│   │   │   └── package.json     # Dependencies for Node.js chaincode
+│   │   └── utils/               # Shared utilities for chaincode
+│   ├── network/                 # Fabric network configuration
+│   │   ├── crypto-config/       # Certificates and keys
+│   │   ├── channel-artifacts/   # Channel configuration 
+│   │   └── configtx.yaml        # Network config for channels/orgs
+│   ├── scripts/                 # Network management scripts
+│   │   ├── start-network.sh     # Script to start the network
+│   │   ├── stop-network.sh      # Script to stop the network
+│   │   └── deploy-chaincode.sh  # Script to deploy chaincode
+│   └── sdk/                     # Fabric SDK integration layer
+│       ├── connection.py        # Connection management
+│       ├── gateway.py           # Fabric Gateway integration
+│       └── transactions.py      # Transaction submission utilities
+├── services/                    # Business logic services
+│   ├── asset_service.py         # Asset management service
+│   ├── auth_service.py          # Authentication service
+│   ├── user_service.py          # User management service
+│   └── blockchain_service.py    # Blockchain interaction service
+├── utils/                       # Shared utility functions
+│   ├── logging.py               # Logging configuration
+│   ├── security.py              # Security utilities
+│   └── validators.py            # Custom validators
+├── tests/                       # Test suite
+│   ├── api/                     # API endpoint tests
+│   ├── blockchain/              # Blockchain integration tests
+│   ├── services/                # Service unit tests
+│   └── conftest.py              # Test configuration
+├── docker/                      # Docker configurations
+│   ├── api/                     # FastAPI service Dockerfile
+│   ├── blockchain/              # Blockchain service Dockerfile
+│   └── nginx/                   # API gateway configuration
+├── docker-compose.yaml          # Docker compose for local development
+├── docker-compose.prod.yaml     # Docker compose for production
+├── .env.example                 # Example environment variables
+├── requirements.txt             # Python dependencies
+├── alembic.ini                  # Database migration configuration
+├── migrations/                  # Database migrations
+│   └── versions/                # Migration versions
+└── README.md                    # Project documentation
