@@ -1,19 +1,20 @@
-# Mini Local E-Certificate Issuance & Verification System
+# Supply Chain Transparency & Traceability Platform
 
-![Project Banner](https://via.placeholder.com/800x200?text=E-Certificate+Blockchain+System)
+![Project Banner](https://via.placeholder.com/800x200?text=Supply+Chain+Traceability+Platform)
 
 ## 📋 Project Overview
 
-The Mini Local E-Certificate Issuance & Verification System is a blockchain-based solution for creating, managing, and verifying academic certificates using Hyperledger Fabric. The system connects three organizations (University, Student, and Verifier) in a trusted network that ensures certificate authenticity and prevents forgery.
+The Supply Chain Transparency & Traceability Platform leverages blockchain technology to create an immutable record of products as they move through the supply chain from manufacturer to consumer. The system ensures product authenticity, origin verification, and transparent supply chain monitoring using Hyperledger Fabric for secure, permissioned blockchain capabilities and FastAPI for efficient data access.
 
 ### 🎯 Core Features
 
-- **Certificate Issuance**: Universities can create and issue digital certificates with cryptographic proof
-- **Certificate Viewing**: Students can access and view their certificates
-- **Certificate Verification**: Third parties can verify the authenticity of certificates
-- **Secure Storage**: All certificate data is stored on an immutable blockchain
-- **Easy API Access**: FastAPI provides a simple interface to interact with the blockchain
-- **Local Network**: Deploy across multiple computers in a LAN environment
+- **Product Registration**: Manufacturers register products with unique identifiers and origin data
+- **Supply Chain Tracking**: Record every transfer of custody with location and timestamp
+- **Condition Monitoring**: Track and verify storage/transport conditions (temperature, humidity, etc.)
+- **QR/Barcode Integration**: Scan products to retrieve complete supply chain history
+- **Verification Portal**: Consumers can verify product authenticity and origin
+- **Real-time Alerting**: Notify stakeholders of condition violations or suspicious activities
+- **Analytics Dashboard**: Visualize supply chain efficiency and identify bottlenecks
 
 ## 🏗️ Architecture
 
@@ -26,9 +27,10 @@ The system uses a combination of:
 
 ### 👥 Organizations
 
-1. **University Organization**: Issues certificates with digital signatures
-2. **Student Organization**: Views and manages received certificates
-3. **Verifier Organization**: Validates certificate authenticity
+1. **Manufacturer Organization**: Registers products and initiates supply chain records
+2. **Distributor Organization**: Records logistics and transfer of custody events
+3. **Retailer Organization**: Tracks final-mile delivery and sales
+4. **Inspector Organization**: Verifies product conditions and compliance
 
 ## 🛠️ Project Structure
 
@@ -36,9 +38,10 @@ The system uses a combination of:
 ├── api/                         # FastAPI application 
 │   ├── v1/                      # API version 1 endpoints
 │   │   ├── endpoints/           # API route handlers 
-│   │   │   ├── certificates.py  # Certificate management endpoints
+│   │   │   ├── products.py      # Product registration endpoints
+│   │   │   ├── tracking.py      # Supply chain tracking endpoints
+│   │   │   ├── verification.py  # Product verification endpoints
 │   │   │   ├── auth.py          # Authentication endpoints
-│   │   │   ├── blockchain.py    # Blockchain interaction endpoints
 │   │   │   └── users.py         # User management endpoints
 │   │   ├── deps.py              # Dependency injection
 │   │   └── router.py            # API router configuration
@@ -51,13 +54,14 @@ The system uses a combination of:
 │   │   ├── session.py           # Database session management
 │   │   └── repositories/        # Database access layer
 │   ├── schemas/                 # Pydantic schemas for request/response validation
-│   │   ├── certificates.py      # Certificate schemas
+│   │   ├── products.py          # Product schemas
+│   │   ├── tracking.py          # Supply chain event schemas
 │   │   ├── users.py             # User schemas 
 │   │   └── blockchain.py        # Blockchain operation schemas
 │   └── main.py                  # FastAPI application entry point
 ├── blockchain/                  # Hyperledger Fabric integration
 │   ├── chaincode/               # Smart contract definitions
-│   │   ├── certificates/        # Certificate management smart contracts 
+│   │   ├── supplychain/         # Supply chain tracking contracts 
 │   │   │   ├── src/             # Source code for the chaincode
 │   │   │   ├── Dockerfile       # Docker build for chaincode
 │   │   │   └── package.json     # Dependencies for Node.js chaincode
@@ -75,7 +79,9 @@ The system uses a combination of:
 │       ├── gateway.py           # Fabric Gateway integration
 │       └── transactions.py      # Transaction submission utilities
 ├── services/                    # Business logic services
-│   ├── certificate_service.py   # Certificate management service
+│   ├── product_service.py       # Product management service
+│   ├── tracking_service.py      # Supply chain tracking service
+│   ├── verification_service.py  # Product verification service
 │   ├── auth_service.py          # Authentication service
 │   ├── user_service.py          # User management service
 │   └── blockchain_service.py    # Blockchain interaction service
@@ -92,15 +98,18 @@ The system uses a combination of:
 │   ├── api/                     # FastAPI service Dockerfile
 │   ├── blockchain/              # Blockchain service Dockerfile
 │   └── nginx/                   # API gateway configuration
-├── frontend/                    # Simple web interface
-│   ├── university/              # University portal
-│   ├── student/                 # Student portal
-│   └── verifier/                # Verifier portal
+├── frontend/                    # User interfaces
+│   ├── manufacturer/            # Manufacturer dashboard
+│   ├── distributor/             # Distributor portal
+│   ├── retailer/                # Retailer interface
+│   ├── inspector/               # Inspector tools
+│   └── consumer/                # Consumer verification portal
 ├── deployment/                  # Deployment configurations
 │   ├── local/                   # Local network deployment
-│   │   ├── university/          # University node config
-│   │   ├── student/             # Student node config
-│   │   └── verifier/            # Verifier node config
+│   │   ├── manufacturer/        # Manufacturer node config 
+│   │   ├── distributor/         # Distributor node config
+│   │   ├── retailer/            # Retailer node config
+│   │   └── inspector/           # Inspector node config
 │   └── cloud/                   # Cloud deployment templates (future)
 ├── docker-compose.yaml          # Docker compose for local development
 ├── docker-compose.prod.yaml     # Docker compose for production
@@ -116,48 +125,50 @@ The system uses a combination of:
 
 ### Phase 1: Research & Planning (2 weeks)
 
-- [x] **Define certificate structure and metadata**
-  - Certificate ID, student details, course information, grades, date
-  - Digital signature standards and verification methods
+- [ ] **Define product tracking requirements**
+  - Identify mandatory product attributes (SKU, batch, manufacturing date, etc.)  
+  - Determine supply chain events to track (manufacturing, shipping, receiving, etc.)
+  - Research IoT integration for condition monitoring (temperature, humidity, etc.)
   
-- [x] **Design blockchain network architecture**
-  - Organization structure (University, Student, Verifier)
-  - Channel configuration for privacy
-  - Endorsement policies
+- [ ] **Design blockchain network architecture**
+  - Organization structure (Manufacturer, Distributor, Retailer, Inspector)
+  - Channel configuration for controlled data sharing
+  - Endorsement policies for transaction validation
 
-- [x] **API design**
+- [ ] **API design**
   - Define endpoints for all stakeholders
-  - Authentication and authorization strategy
-  - Document API specifications
+  - Design authentication and authorization strategy
+  - Document API specifications with OpenAPI
 
 ### Phase 2: Core Development (4 weeks)
 
 - [ ] **Blockchain network setup**
-  - Configure Hyperledger Fabric components
+  - Configure Hyperledger Fabric network components
   - Set up organizations and channels
-  - Develop and test connection profiles
+  - Develop connection profiles for different participants
 
 - [ ] **Smart contract development**
-  - Certificate issuance chaincode
-  - Certificate viewing chaincode
-  - Certificate verification chaincode
+  - Product registration and validation chaincode
+  - Supply chain event tracking chaincode
+  - Verification and history retrieval chaincode
 
 - [ ] **API development**
   - FastAPI endpoint implementation
   - Integration with blockchain SDK
-  - Database schema and migrations
+  - Database schema and migrations for off-chain data
 
 ### Phase 3: Integration & Testing (3 weeks)
 
 - [ ] **Integrate components**
   - Connect API with blockchain network
   - Implement authentication and authorization
-  - Develop simple frontend interfaces
+  - Develop dashboard interfaces for different stakeholders
 
 - [ ] **Testing**
   - Unit testing for services and API endpoints
   - Integration testing for blockchain interaction
   - End-to-end testing across organizations
+  - Performance testing under various load conditions
 
 ### Phase 4: Deployment & Documentation (3 weeks)
 
@@ -168,8 +179,8 @@ The system uses a combination of:
 
 - [ ] **Documentation**
   - API documentation with Swagger/ReDoc
-  - Deployment guides for all organizations
-  - User manuals for different user types
+  - Deployment guides for different stakeholders
+  - User manuals for different roles
 
 - [ ] **Cloud-ready preparation**
   - Kubernetes manifests (optional)
@@ -189,8 +200,8 @@ The system uses a combination of:
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/e-certificate-system.git
-cd e-certificate-system
+git clone https://github.com/yourusername/supply-chain-platform.git
+cd supply-chain-platform
 ```
 
 2. Set up environment variables:
@@ -221,97 +232,132 @@ http://localhost:8000/docs
 
 ## 🌐 Deployment Across Multiple Nodes
 
-### University Node Setup
+### Manufacturer Node Setup
 
-1. Configure the university node:
+1. Configure the manufacturer node:
 ```bash
-cd deployment/local/university
+cd deployment/local/manufacturer
 ./setup.sh
 ```
 
-2. Start university services:
+2. Start manufacturer services:
 ```bash
-docker-compose -f docker-compose.university.yaml up -d
+docker-compose -f docker-compose.manufacturer.yaml up -d
 ```
 
-### Student Node Setup
+### Distributor Node Setup
 
-1. Configure the student node:
+1. Configure the distributor node:
 ```bash
-cd deployment/local/student
+cd deployment/local/distributor
 ./setup.sh
 ```
 
-2. Start student services:
+2. Start distributor services:
 ```bash
-docker-compose -f docker-compose.student.yaml up -d
+docker-compose -f docker-compose.distributor.yaml up -d
 ```
 
-### Verifier Node Setup
+### Retailer Node Setup
 
-1. Configure the verifier node:
+1. Configure the retailer node:
 ```bash
-cd deployment/local/verifier
+cd deployment/local/retailer
 ./setup.sh
 ```
 
-2. Start verifier services:
+2. Start retailer services:
 ```bash
-docker-compose -f docker-compose.verifier.yaml up -d
+docker-compose -f docker-compose.retailer.yaml up -d
+```
+
+### Inspector Node Setup
+
+1. Configure the inspector node:
+```bash
+cd deployment/local/inspector
+./setup.sh
+```
+
+2. Start inspector services:
+```bash
+docker-compose -f docker-compose.inspector.yaml up -d
 ```
 
 ## 📝 Technical Implementation Details
 
-### Certificate Lifecycle
+### Product Lifecycle
 
-1. **Creation**: University staff creates a certificate with student data
-2. **Issuance**: Certificate is signed and committed to the blockchain
-3. **Storage**: Certificate metadata and hash are stored on-chain
-4. **Access**: Students can view certificates assigned to them
-5. **Verification**: Third parties can verify authenticity through the verifier API
+1. **Registration**: Manufacturer registers product with detailed info and digital signature
+2. **Tracking**: Each supply chain event is recorded with location, timestamp, and handler
+3. **Condition Monitoring**: Environmental conditions are recorded at key points
+4. **Verification**: QR/barcode scanning retrieves complete product history
+5. **Analytics**: All data is aggregated for supply chain optimization
 
 ### Smart Contract Functions
 
-- `IssueCertificate(id, data, signature)`
-- `GetCertificate(id)`
-- `VerifyCertificate(id, hash)`
-- `GetCertificateHistory(id)`
-- `GetCertificatesByStudent(studentId)`
+- `RegisterProduct(id, data, signature)`
+- `RecordTransferEvent(productId, from, to, location, timestamp)`
+- `RecordConditionEvent(productId, conditions, location, timestamp)`
+- `GetProductHistory(productId)`
+- `VerifyProductAuthenticity(productId)`
 
 ### API Endpoints
 
-- **University API**: `/api/v1/certificates/issue`, `/api/v1/certificates/revoke`
-- **Student API**: `/api/v1/certificates/my-certificates`, `/api/v1/certificates/{cert_id}`
-- **Verifier API**: `/api/v1/certificates/verify/{cert_id}`
+- **Manufacturer API**: `/api/v1/products/register`, `/api/v1/products/update`
+- **Distributor API**: `/api/v1/tracking/transfer`, `/api/v1/tracking/receive`
+- **Retailer API**: `/api/v1/tracking/retail-arrival`, `/api/v1/tracking/sold`
+- **Inspector API**: `/api/v1/verification/inspect`, `/api/v1/verification/certify`
+- **Consumer API**: `/api/v1/verification/product/{product_id}`
 - **Authentication**: `/api/v1/auth/login`, `/api/v1/auth/register`
 
 ## 🔒 Security Considerations
 
 - All communications between nodes are encrypted using TLS
-- Certificate private keys are stored securely
+- Private keys are securely stored and managed
 - Role-based access control for all API endpoints
-- Audit logging for all certificate operations
-- Digital signatures ensure certificate authenticity
+- Audit logging for all product interactions
+- Digital signatures ensure data authenticity
 
-## 📊 Project Roadmap
+## 📊 Industry Applications
+
+The platform can be customized for various industries:
+
+### Pharmaceutical Supply Chain
+- Track medication from manufacturing to patient
+- Monitor storage temperatures for sensitive drugs
+- Prevent counterfeit medications
+- Ensure compliance with regulations
+
+### Food Supply Chain
+- Verify organic/fair-trade claims
+- Track food from farm to table
+- Monitor refrigeration during transport
+- Enable rapid response to contamination issues
+
+### Luxury Goods
+- Authenticate high-value products
+- Prevent counterfeiting
+- Track ownership history
+- Verify ethical sourcing claims
+
+### Electronics
+- Combat gray market sales
+- Verify authentic components
+- Track warranty information
+- Record repair history
+
+## 📈 Project Roadmap
 
 ### Current Version (v0.1)
-- Basic certificate issuance and verification
+- Basic product registration and tracking
 - Local network deployment
-- Simple web interface
+- Simple web interfaces
 
 ### Future Enhancements
-- Mobile application for students
-- QR code integration for easy verification
-- Integration with student information systems
-- Certificate templates and customization
-- Multi-signature certificates requiring approval from multiple authorities
+- Mobile applications for all stakeholders
+- IoT sensor integration for automated condition monitoring
+- AI-powered anomaly detection
+- Predictive analytics for supply chain optimization
+- Integration with existing ERP and inventory systems
 - Cloud deployment with Kubernetes
-
-## 👥 Contributors
-
-- [Your Name](https://github.com/yourusername) - Project Lead
-
-## 📄 License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
